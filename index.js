@@ -32,6 +32,7 @@ app.get("/api", (req, res) => {
   })
 });
 
+
 const isValidDate = (date) => date.toUTCString() === 'Invalid Date';
 
 app.get("/api/:date?", (req, res) => {
