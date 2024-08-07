@@ -24,30 +24,32 @@ app.get("/api/hello", function (req, res) {
   res.json({greeting: 'hello API'});
 });
 
-const isValidDate = (date) =>
-  date.toUTCString() === 'Invalid Date';
+app.get("/api", (req, res) => {
 
-app.get('/api/:date?', (req, res) => {
+  res.json({
+    unix: new Date().getTime(),
+    utc: new Date().toUTCString()
+  })
+});
+
+const isValidDate = (date) => date.toUTCString() === 'Invalid Date';
+
+app.get("/api/:date?", (req, res) => {
+
   let date = new Date(req.params.date);
 
   if (isValidDate(date)) {
     date = new Date(+req.params.date)
     console.log(date)
   }
+
   if (isValidDate(date)) {
     res.json({
-      "Error": "Invalid Date"
+      "error": "Invalid Date"
     })
-    return
+    return;
   }
-  res.json({
-    unix: date.getTime(),
-    utc: date.toUTCString()
-  });
-});
 
-app.get('/api', (req, res) => {
-  let date = new Date();
   res.json({
     unix: date.getTime(),
     utc: date.toUTCString()
